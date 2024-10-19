@@ -50,7 +50,6 @@ function loadOBJ(renderer, path, name, objMaterial, transform) {
 									material = buildSSRMaterial(colorMap, mat.specular.toArray(), light, "./src/shaders/ssrShader/ssrVertex.glsl", "./src/shaders/ssrShader/ssrFragment.glsl");
 									break;
 							}
-							console.log(light,'111111')
 							material.then((data) => {
 								let meshRender = new MeshRender(renderer.gl, mesh, data);
 								renderer.addMeshRender(meshRender);
