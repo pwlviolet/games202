@@ -14,6 +14,7 @@ class SSRMaterial extends Material {
             'uGShadow': { type: 'texture', value: camera.fbo.textures[3] },
             'uGPosWorld': { type: 'texture', value: camera.fbo.textures[4] },
         }, [], vertexShader, fragmentShader);
+        console.log(lightIntensity,'99999')
     }
 }
 

@@ -11,6 +11,7 @@ varying highp vec2 vTextureCoord;
 varying highp vec3 vFragPos;
 varying highp vec3 vNormal;
 varying highp vec4 vPositionFromLight;
+varying highp vec3 shadowCoord;
 
 void main(void) {
 
@@ -22,4 +23,6 @@ void main(void) {
 
   vTextureCoord = aTextureCoord;
   vPositionFromLight = uLightMVP * vec4(aVertexPosition, 1.0);
+  shadowCoord=vPositionFromLight.xyz/vPositionFromLight.w;
+  shadowCoord.xyz=(shadowCoord.xyz+1.0)/2.0;
 }

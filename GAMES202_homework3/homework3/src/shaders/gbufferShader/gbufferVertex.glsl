@@ -18,6 +18,7 @@ void main(void) {
   vec4 posWorld = uModelMatrix * vec4(aVertexPosition, 1.0);
   vPosWorld = posWorld.xyzw / posWorld.w;
   vec4 normalWorld = uModelMatrix * vec4(aNormalPosition, 0.0);
+  //需要再来个逆转置
   vNormalWorld = normalize(normalWorld.xyz);
   vTextureCoord = aTextureCoord;
   vWorldToLight = uLightVP;

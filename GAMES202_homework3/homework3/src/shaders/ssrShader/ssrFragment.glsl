@@ -123,6 +123,10 @@ vec3 GetGBufferDiffuse(vec2 uv) {
  */
 vec3 EvalDiffuse(vec3 wi, vec3 wo, vec2 uv) {
   vec3 L = vec3(0.0);
+  vec3 reflectivity = GetGBufferDiffuse(uv);
+  vec3 normal = GetGBufferNormalWorld(uv);
+  float cosi = max(0., dot(normal, wi));
+  L= reflectivity * cosi *INV_PI;
   return L;
 }
 
@@ -133,6 +137,7 @@ vec3 EvalDiffuse(vec3 wi, vec3 wo, vec2 uv) {
  */
 vec3 EvalDirectionalLight(vec2 uv) {
   vec3 Le = vec3(0.0);
+  Le = GetGBufferuShadow(uv) * uLightRadiance;
   return Le;
 }
 
@@ -147,6 +152,15 @@ void main() {
 
   vec3 L = vec3(0.0);
   L = GetGBufferDiffuse(GetScreenCoordinate(vPosWorld.xyz));
-  vec3 color = pow(clamp(L, vec3(0.0), vec3(1.0)), vec3(1.0 / 2.2));
+
+  vec2 uv=GetScreenCoordinate(vPosWorld.xyz);
+  // vec3 posworld=GetGBufferPosWorld(uv);
+  // vec3 normal=GetGBufferNormalWorld(uv);
+
+  vec3 wi = normalize(uLightDir);
+  vec3 wo = normalize(uCameraPos - vPosWorld.xyz);
+  vec3 diffuse=EvalDirectionalLight(uv)*EvalDiffuse(wi,wo,uv);
+  vec3 color = pow(clamp(diffuse, vec3(0.0), vec3(1.0)), vec3(1.0 / 2.2));
   gl_FragColor = vec4(vec3(color.rgb), 1.0);
+    // gl_FragColor = vec4(vec3(1.0), 1.0);
 }

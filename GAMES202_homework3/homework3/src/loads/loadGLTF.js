@@ -50,6 +50,7 @@ function loadGLTF(renderer, path, name, materialName) {
 					}
 
 					let light = renderer.lights[0].entity;
+					console.log(light,'111111')
 					switch (materialName) {
 						case 'SSRMaterial':
 							material = buildSSRMaterial(diffuseMap, specularMap, light, renderer.camera, "./src/shaders/ssrShader/ssrVertex.glsl", "./src/shaders/ssrShader/ssrFragment.glsl");
